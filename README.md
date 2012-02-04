@@ -46,7 +46,6 @@ Upcoming features:
 
 * "reverse" output (i.e. list of hosts for any vulnerability) 
 * more control over final output
-* Pod::Use
 
 
 ## Copyright
