@@ -6,7 +6,7 @@ It works with any proper .nessus file.
 
 ### Installation
 
-**Simple Nessus** is developed on Perl v5.10.0 and requires _XML::Simple_ and _Getopt::Long_. To install them, open the terminal and run
+**Simple Nessus** is developed on Perl v5.12.3 and requires _XML::Simple_ and _Getopt::Long_. To install them, open the terminal and run
 
 	sudo cpan
 	install XML::Simple
