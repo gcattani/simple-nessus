@@ -2,7 +2,7 @@
 
 **Simple Nessus** is a Perl script that aims to render [Tenable Nessus](http://www.tenable.com/products/nessus) reports more tidy by keeping only the relevant information.
 
-It works with any proper .nessus file.
+It works with any proper .nessus (v1) file.
 
 ### Installation
 
@@ -20,33 +20,17 @@ To execute **Simple Nessus**, run it as follows:
 	./simple-nessus.pl {nessus-file} [SEVERITY] [OUTPUT]
 
 	SEVERITY:
-	  -s L	low, medium and high	(default)
-	  -s M	medium and high
-	  -s H	high only
+	  -s L	low, medium, high and critical	(default)
+	  -s M	medium, high and critical
+	  -s H	high and critical
+	  -s C	critical only
 	
-
-### Output 
-
-The script supports several different outputs, detailed below.
-
-1) STDOUT (default) and TXT (-o T):
-
-	[*] Host_IP1
-	Vulnerability_1
-	Vulnerability_2
-
-2) CSV (-o C):
-
-	Host_IP1,Vulnerability1
-	Host_IP1,Vulnerability2
-
-### TO-DO
-
-Upcoming features:
-
-* "reverse" output (i.e. list of hosts for any vulnerability) 
-* more control over final output
-
+	OUTPUT
+	  none	STDOUT							(default)
+	  -o T	.txt file
+	  -o C	.csv file
+	  -o M	.md file
+	
 
 ## Copyright
 
