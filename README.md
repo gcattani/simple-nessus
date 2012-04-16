@@ -2,7 +2,7 @@
 
 **Simple Nessus** is a Perl script that aims to render [Tenable Nessus](http://www.tenable.com/products/nessus) reports more tidy by keeping only the relevant information.
 
-It works with any proper .nessus (v1) file.
+It works with any proper .nessus (v1 and v2) file.
 
 ### Installation
 
@@ -17,19 +17,26 @@ It works with any proper .nessus (v1) file.
 
 To execute **Simple Nessus**, run it as follows:
 	
-	./simple-nessus.pl {nessus-file} [SEVERITY] [OUTPUT]
+	perl simple-nessus.pl {NESSUS-FILE} {VERSION} [SEVERITY] [OUTPUT]
 
+	VERSION:
+	 -v1	.nessus v1 file
+	 -v2	.nessus v2 file
+	
 	SEVERITY:
 	  -s L	low, medium, high and critical	(default)
 	  -s M	medium, high and critical
 	  -s H	high and critical
-	  -s C	critical only
 	
 	OUTPUT
-	  none	STDOUT							(default)
+	  -o O	STDOUT							(default)
 	  -o T	.txt file
 	  -o C	.csv file
 	  -o M	.md file
+
+Example:
+
+	perl simple-nessus.pl nessus-test-01.nessus -v1 -s H -o T
 	
 
 ## Copyright
