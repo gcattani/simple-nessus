@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>Simple Nessus by gcatt</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Simple Nessus</h1>
+        <h2>.nessus files simplified</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/gcatt/simple-nessus/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/gcatt/simple-nessus/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/gcatt/simple-nessus" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <p>A Perl script developed to render <a href="http://www.nessus.org">Tenable Nessus</a> reports more tidy by keeping only the relevant information.</p>
+
+<p>It works with any proper .nessus (v1 and v2) file (tested on Nessus 5.0.0, Web Server Version 3.0.14).</p>
+
+<ul>
+<li>Version 0.7</li>
+<li>Last Modified: 16 April 2012<br>
+</li>
+</ul><h3>Getting Started</h3>
+
+<p><strong>Simple Nessus</strong> is developed on Perl v5.12.3 and requires <em>XML::Simple</em> and <em>Getopt::Long</em>. To install them, open the terminal and run</p>
+
+<pre><code>sudo cpan
+install XML::Simple
+install Getopt::Long
+</code></pre>
+
+<p>Finally, to execute it run:</p>
+
+<pre><code>perl simple-nessus.pl {.NESSUS-FILE} {VERSION} [SEVERITY] [OUTPUT]
+</code></pre>
+
+<h3>Options</h3>
+
+<p>Choose which file version are you using (mandatory!):</p>
+
+<pre><code>-v1 .nessus v1 file
+-v2 .nessus v2 file
+</code></pre>
+
+<p>Choose which vulnerabilities:</p>
+
+<pre><code>-s L    low, medium, high and critical  (default)
+-s M    medium, high and critical
+-s H    high and critical
+</code></pre>
+
+<p>Choose how <strong>Simple Nessus</strong> returns the information you need:</p>
+
+<pre><code>-o O    STDOUT  (default)
+-o T    .txt
+-o C    .csv
+-o M    .md
+</code></pre>
+
+<h3>What's Next?</h3>
+
+<p>Some of the upcoming features:</p>
+
+<ul>
+<li>Option to show specific ports for each vulnerability</li>
+<li>Option to show CVEs in output</li>
+<li>Support "reverse output" mode (i.e. list of hosts for each vulnerability)</li>
+</ul><h3>Copyright</h3>
+
+<p>Copyright (c) 2012 Giovanni Cattani.</p>
+
+<p><strong>Simple Nessus</strong> is released under <a href="http://www.opensource.org/licenses/mit-license.php">The MIT License</a>.</p>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
