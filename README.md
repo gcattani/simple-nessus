@@ -31,7 +31,7 @@ To execute **Simple Nessus**, run it as follows:
 	OUTPUT
 	  -o O	STDOUT							(default)
 	  -o T	.txt file
-	  -o C	.csv file
+	  -o C	.csv file						[uses semicolon as separator]
 	  -o M	.md file
 
 Example:

@@ -3,7 +3,7 @@
 # Simple Nessus - .nessus files simplified
 #
 # (c) 2012 Giovanni Cattani
-# gcatt.github.com/simple-nessus
+# gcattani.github.com/simple-nessus
 #
 # Released under The MIT License
 
@@ -39,7 +39,7 @@ if ($output eq "T") {
 	open MD, ">>", "simple-output.md";
 } elsif ($output eq "C") {
 	open CSV, ">>", "simple-output.csv";
-	print CSV "host,vulnerability\n";
+	print CSV "host;vulnerability\n";
 } elsif (!($output eq "O")) {
 	die &helper();
 }
@@ -61,7 +61,7 @@ if($v1){
 	&print_name($output, $report_name);
 
 	my $report_host = $nessus->{Report}{ReportHost};
-
+	
 	foreach my $host ( @$report_host ) {
 	
 		&print_host($output, $host->{HostName});
@@ -130,7 +130,7 @@ sub print_name(){
 		print TXT "[#] ", $repo_name, "\n";
 	} elsif ($print_check eq "M") {
 		print MD "# ", $repo_name, "\n";
-	} else {
+	} elsif (!($print_check eq "C")) {
 		die helper();	# This should never happen
 	}
 	# Not Affected: C
@@ -148,7 +148,7 @@ sub print_host(){
 		print TXT "\n[*] ", $host_name, "\n";
 	} elsif ($print_check eq "M") {
 		print MD "\n### ", $host_name, "\n";
-	} else {
+	} elsif (!($print_check eq "C")) {
 		die helper();	# This should never happen
 	}
 	# Not Affected: C
@@ -160,7 +160,7 @@ sub print_vuln(){
 	my $print_check = $_[0]; # $output
 	my $host_ip = $_[1];
 	my $host_vuln = $_[2];
-	
+		
 	if ($print_check eq "O") {
 		print "$host_vuln\n";
 	} elsif ($print_check eq "T") {
@@ -168,7 +168,7 @@ sub print_vuln(){
 	} elsif ($print_check eq "M") {
 		print MD "* ", "$host_vuln  \n";
 	} elsif($print_check eq "C") {
-		print CSV "$host_ip,$host_vuln\n";
+		print CSV "$host_ip;$host_vuln\n";
 	} else {
 		die helper();	# This should never happen
 	}
@@ -179,7 +179,7 @@ sub print_vuln(){
 # sev_calc($severity)
 sub sev_calc(){
 	my $sev_str = $_[0];
-	
+		
 	if ($sev_str eq "L") {
 		return 1;
 	} elsif ($sev_str eq "M") {
@@ -193,6 +193,6 @@ sub sev_calc(){
 
 ##### Prints usage information
 sub helper(){
-	print "\nSimple Nessus 0.7\nUsage: ./simple-nessus.pl {DOT-NESSUS-FILE} {VERSION} [SEVERITY] [OUTPUT]\n\nVERSION:\n  -v1 .nessus v1 file\n  -v2 .nessus v2 file\n\nSEVERITY:\n  -s L: low, medium, high and critical\t(default)\n  -s M: medium, high and critical\n  -s H: high and critical\n\nOUTPUT:\n  -o O: STDOUT\t(default)\n  -o T: .txt\n  -o C: .csv\t[host-ip,vulnerability]\n  -o M: .md\n\n";
+	print "\nSimple Nessus 0.8\nUsage: ./simple-nessus.pl {DOT-NESSUS-FILE} {VERSION} [SEVERITY] [OUTPUT]\n\nVERSION:\n  -v1 .nessus v1 file\n  -v2 .nessus v2 file\n\nSEVERITY:\n  -s L: low, medium, high and critical\t(default)\n  -s M: medium, high and critical\n  -s H: high and critical\n\nOUTPUT:\n  -o O: STDOUT\t(default)\n  -o T: .txt\n  -o C: .csv\t[host-ip,vulnerability]\n  -o M: .md\n\n";
 	exit;
 }
