@@ -17,26 +17,29 @@ It works with any proper .nessus (v1 and v2) file.
 
 To execute **Simple Nessus**, run it as follows:
 	
-	perl simple-nessus.pl {NESSUS-FILE} {VERSION} [SEVERITY] [OUTPUT]
+	perl simple-nessus.pl {NESSUS-FILE} {VERSION} [SEVERITY] [OUTPUT] [OPTIONAL]
 
 	VERSION:
 	 -v1	.nessus v1 file
 	 -v2	.nessus v2 file
 	
 	SEVERITY:
-	  -s L	low, medium, high and critical	(default)
-	  -s M	medium, high and critical
-	  -s H	high and critical
+	  -s L:	low, medium, high and critical	(default)
+	  -s M:	medium, high and critical
+	  -s H:	high and critical
 	
 	OUTPUT
-	  -o O	STDOUT							(default)
-	  -o T	.txt file
-	  -o C	.csv file						[uses semicolon as separator]
-	  -o M	.md file
+	  -o O:	STDOUT							(default)
+	  -o T:	.txt file
+	  -o C:	.csv file						[uses semicolon as separator]
+	  -o M:	.md file
+	
+	OPTIONAL
+	  -ports:	Show host port for each vulnerability
 
 Example:
 
-	perl simple-nessus.pl nessus-test-01.nessus -v1 -s H -o T
+	perl simple-nessus.pl nessus-test-01.nessus -v1 -s H -o T -ports
 	
 
 ## Copyright
