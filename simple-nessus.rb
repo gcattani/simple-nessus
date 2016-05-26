@@ -4,7 +4,7 @@
 Simple Nessus v2.0 - Nessus files simplified
 https://github.com/gcattani/simple-nessus
 
-(c) 2015 Giovanni Cattani
+(c) 2016 Giovanni Cattani
 Released under The MIT License
 =end
 
@@ -25,7 +25,6 @@ Trollop::die :file, "- please select a file to process" unless opts[:file]
 
 doc = Nokogiri::XML(open(opts[:file]).read)
 
-# MANAGE SEVERITY
 if ['L', 'l', 'Low', 'low', 'LOW'].include? opts[:severity]
   arg_severity = 1
 elsif ['M', 'm', 'Medium', 'medium', 'MEDIUM'].include? opts[:severity]
@@ -42,7 +41,7 @@ output_file = opts[:file] + '_' + Time.now.to_s + '.csv'
 
 CSV.open(output_file, 'wb', { col_sep: opts[:col_sep] }) do |csv|
 
-  csv << ['IP Address', 'NetBIOS Name', 'FQDN', 'Severity', 'Risk Factor', 'Port', 'Protocol', 'Service', 'Plugin']
+  csv << ['IP Address', 'NetBIOS Name', 'FQDN', 'Severity', 'Risk Factor', 'Port', 'Protocol', 'Service', 'Plugin', 'Patch Date']
 
   doc.search('//ReportItem').each do |item|
 
@@ -59,6 +58,8 @@ CSV.open(output_file, 'wb', { col_sep: opts[:col_sep] }) do |csv|
 		protocol      = item.attr('protocol')
 		port          = item.attr('port')
 
+	  	patch_date 	  = item.xpath('patch_publication_date').text
+
 		if severity == 0
 			risk_factor = 'Info'
 		elsif severity == 1
@@ -71,7 +72,20 @@ CSV.open(output_file, 'wb', { col_sep: opts[:col_sep] }) do |csv|
 			risk_factor = 'Critical'
 		end
 	    
-	    csv << [host_ip, netbios_name, host_fqdn, severity, risk_factor, port, protocol, svc_name, plugin_name]
+	    # CHECK SSL VERSION
+		if plugin_name == 'SSL Version 2 and 3 Protocol Detection'
+			plugin_output   = item.xpath('plugin_output').text
+			ssl_version 	= plugin_output.scan( /SSLv\d/)
+
+			if (ssl_version.include? 'SSLv2') && (ssl_version.include? 'SSLv3')
+			elsif ssl_version.include? 'SSLv2'
+				plugin_name = 'SSL Version 2 Protocol Detection'
+			elsif ssl_version.include? 'SSLv3'
+				plugin_name = 'SSL Version 3 Protocol Detection'
+			end				
+		end	
+
+	    csv << [host_ip, netbios_name, host_fqdn, severity, risk_factor, port, protocol, svc_name, plugin_name, patch_date]
 
 	  end
 
