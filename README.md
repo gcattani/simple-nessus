@@ -13,7 +13,7 @@ Simple Nessus is developed on Ruby 1.9.3p194 and requires [Nokogiri](http://www.
 	gem install trollop
 
 
-### Usage
+## Usage
 
 To use Simple Nessus, run it as follows:
 
@@ -38,10 +38,10 @@ The currently available options are:
 Example:
 
 	ruby simple-nessus.rb -f nessus-test-01.nessus -s M -c ,
-	
+
 
 ## Copyright
 
-Copyright (c) 2015 Giovanni Cattani
+Copyright (c) 2017 Giovanni Cattani
 
 **Simple Nessus** is released under [The MIT License](http://www.opensource.org/licenses/mit-license.php).

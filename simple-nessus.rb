@@ -1,10 +1,10 @@
 #!/usr/bin/ruby
 
 =begin
-Simple Nessus v2.0 - Nessus files simplified
+Simple Nessus v2.2 - Nessus files simplified
 https://github.com/gcattani/simple-nessus
 
-(c) 2016 Giovanni Cattani
+(c) 2017 Giovanni Cattani
 Released under The MIT License
 =end
 
@@ -13,8 +13,8 @@ require 'trollop'
 require 'csv'
 
 opts = Trollop::options do
-  version "Simple Nessus v2.0"
-  banner  "Simple Nessus v2.0\nhttps://github.com/gcattani/simple-nessus\n\nUsage:\n\t./simple-nessus.rb -f {FILE} [OPTIONS]\n\nOPTIONS:"
+  version "Simple Nessus v2.2"
+  banner  "Simple Nessus v2.2\nhttps://github.com/gcattani/simple-nessus\n\nUsage:\n\t./simple-nessus.rb -f {FILE} [OPTIONS]\n\nOPTIONS:"
 
   opt :file, 'Nessus file to process',:type => String
   opt :severity, 'Minimum Severity Level: [A]ll, [L]ow, [M]edium, [H]igh, [C]ritical', :default => 'L'
@@ -41,7 +41,7 @@ output_file = opts[:file] + '_' + Time.now.to_s + '.csv'
 
 CSV.open(output_file, 'wb', { col_sep: opts[:col_sep] }) do |csv|
 
-  csv << ['IP Address', 'NetBIOS Name', 'FQDN', 'Severity', 'Risk Factor', 'Port', 'Protocol', 'Service', 'Plugin', 'Patch Date']
+  csv << ['IP Address', 'NetBIOS Name', 'FQDN', 'Severity', 'Risk Factor', 'Port', 'Protocol', 'Service', 'Plugin', 'Patch Date', 'Exploit Available']
 
   doc.search('//ReportItem').each do |item|
 
@@ -49,16 +49,18 @@ CSV.open(output_file, 'wb', { col_sep: opts[:col_sep] }) do |csv|
 
 	  if (severity >= arg_severity)
 
-	  	host_ip 	  = item.parent.xpath('HostProperties/tag[@name = "host-ip"]').text
-	  	netbios_name  = item.parent.xpath('HostProperties/tag[@name = "netbios-name"]').text
-	  	host_fqdn     = item.parent.xpath('HostProperties/tag[@name = "host-fqdn"]').text
+	  	host_ip 	  		= item.parent.xpath('HostProperties/tag[@name = "host-ip"]').text
+	  	netbios_name  		= item.parent.xpath('HostProperties/tag[@name = "netbios-name"]').text
+	  	host_fqdn    		= item.parent.xpath('HostProperties/tag[@name = "host-fqdn"]').text
 
-		plugin_name   = item.attr('pluginName')
-		svc_name      = item.attr('svc_name')
-		protocol      = item.attr('protocol')
-		port          = item.attr('port')
+		plugin_name   		= item.attr('pluginName')
+		svc_name      		= item.attr('svc_name')
+		protocol      		= item.attr('protocol')
+		port          		= item.attr('port')
 
-	  	patch_date 	  = item.xpath('patch_publication_date').text
+	  	patch_date 	  		= item.xpath('patch_publication_date').text
+	  	exploit_available   = item.xpath('exploit_available').text
+
 
 		if severity == 0
 			risk_factor = 'Info'
@@ -85,7 +87,7 @@ CSV.open(output_file, 'wb', { col_sep: opts[:col_sep] }) do |csv|
 			end				
 		end	
 
-	    csv << [host_ip, netbios_name, host_fqdn, severity, risk_factor, port, protocol, svc_name, plugin_name, patch_date]
+	    csv << [host_ip, netbios_name, host_fqdn, severity, risk_factor, port, protocol, svc_name, plugin_name, patch_date, exploit_available]
 
 	  end
 
